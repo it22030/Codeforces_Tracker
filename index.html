@@ -1,0 +1,3471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codeforces Tracker</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #e5e7eb;
+    min-height: 100vh;
+}
+
+/* Navbar Styles */
+.navbar {
+    background: rgba(2, 6, 23, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.logo-icon {
+    font-size: 28px;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.nav-link {
+    background: rgba(30, 41, 59, 0.8);
+    color: #cbd5e1;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.nav-link:hover {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
+    border-color: transparent;
+}
+
+.nav-link.active {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+    transform: translateY(-2px);
+}
+
+.nav-link i {
+    font-size: 16px;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: #e5e7eb;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Main Container */
+.container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.hero-section {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 40px;
+    background: rgba(2, 6, 23, 0.7);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.hero-section h1 {
+    font-size: 36px;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-section p {
+    color: #94a3b8;
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Form Styles */
+.form {
+    background: rgba(2, 6, 23, 0.7);
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 30px;
+    backdrop-filter: blur(10px);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #cbd5e1;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #e5e7eb;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+}
+
+.form-control::placeholder {
+    color: #64748b;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #22c55e;
+}
+
+.checkbox-group label {
+    color: #cbd5e1;
+    cursor: pointer;
+    user-select: none;
+}
+
+.btn {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(34, 197, 94, 0.4);
+}
+
+.btn i {
+    font-size: 18px;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.stats-box {
+    background: rgba(2, 6, 23, 0.7);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.stats-box:hover {
+    transform: translateY(-4px);
+    border-color: rgba(34, 197, 94, 0.3);
+    box-shadow: 0 8px 24px rgba(34, 197, 94, 0.1);
+}
+
+.stats-number {
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+}
+
+.stats-label {
+    font-size: 13px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Card Styles */
+.card {
+    background: rgba(2, 6, 23, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    border-color: rgba(34, 197, 94, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #22c55e;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Day Records */
+.day-records {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.day-record {
+    background: rgba(30, 41, 59, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.day-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fbbf24;
+    margin-bottom: 8px;
+}
+
+.day-date {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 12px;
+}
+
+.day-topic-details {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 12px;
+    color: #64748b;
+    max-height: 80px;
+    overflow-y: auto;
+}
+
+/* All Topics Container */
+.all-topics-container {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 10px;
+    padding: 15px;
+    background: rgba(30, 41, 59, 0.8);
+    border-radius: 8px;
+}
+
+.topic-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.topic-item:last-child {
+    border-bottom: none;
+}
+
+/* Chart Container */
+.chart-container {
+    background: rgba(2, 6, 23, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 30px;
+    backdrop-filter: blur(10px);
+}
+
+/* Problem List Styles */
+.problem-list {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 15px;
+    background: rgba(30, 41, 59, 0.8);
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.problem-item {
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    background: rgba(15, 23, 42, 0.8);
+    border-radius: 8px;
+    border-left: 4px solid #22c55e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.problem-item:hover {
+    background: rgba(30, 41, 59, 0.9);
+    transform: translateX(5px);
+}
+
+.problem-link {
+    color: #e5e7eb;
+    text-decoration: none;
+    font-weight: 500;
+    flex-grow: 1;
+}
+
+.problem-link:hover {
+    color: #22c55e;
+    text-decoration: underline;
+}
+
+.problem-rating {
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+/* Rating colors */
+.rating-800-1200 { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+.rating-1300-1500 { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+.rating-1600-1900 { background: rgba(168, 85, 247, 0.2); color: #a855f7; }
+.rating-2000-2400 { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+.rating-2500-plus { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+.rating-unsolved { background: rgba(239, 68, 68, 0.3); color: #ef4444; border-left-color: #ef4444; }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(2, 6, 23, 0.98);
+        flex-direction: column;
+        padding: 20px;
+        gap: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: none;
+        border-radius: 0 0 15px 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .nav-links.active {
+        display: flex;
+    }
+    
+    .nav-link {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .hero-section {
+        padding: 30px 20px;
+    }
+    
+    .hero-section h1 {
+        font-size: 28px;
+    }
+    
+    .form {
+        padding: 20px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .day-records {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-section h1 {
+        font-size: 24px;
+    }
+    
+    .logo-text {
+        font-size: 20px;
+    }
+    
+    .nav-link {
+        padding: 8px 15px;
+        font-size: 13px;
+    }
+}
+
+/* Loading Animation */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #22c55e;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 20px;
+    margin-left: 8px;
+}
+
+.badge-primary {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.badge-warning {
+    background: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+}
+
+.badge-danger {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.badge-info {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 30px 0;
+    color: #64748b;
+    font-size: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 50px;
+}
+
+.footer a {
+    color: #22c55e;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Rating Chart Styles */
+.rating-chart-container {
+    background: rgba(2, 6, 23, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 30px;
+    backdrop-filter: blur(10px);
+}
+
+.rating-bar-container {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 15px;
+    background: rgba(30, 41, 59, 0.8);
+    border-radius: 8px;
+}
+
+.rating-bar {
+    margin-bottom: 12px;
+}
+
+.rating-bar-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    align-items: center;
+}
+
+.rating-bar-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rating-bar-value {
+    font-weight: bold;
+    color: #22c55e;
+}
+
+.rating-bar-progress {
+    height: 8px;
+    background: rgba(148, 163, 184, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.rating-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.rating-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.rating-group-item {
+    background: rgba(30, 41, 59, 0.8);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Monthly Problems Expandable */
+.month-day-item {
+    background: rgba(30, 41, 59, 0.8);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.month-day-header {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.month-day-header:hover {
+    background: rgba(30, 41, 59, 0.9);
+}
+
+.month-day-header.active {
+    background: rgba(30, 41, 59, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.month-day-content {
+    padding: 0 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.month-day-content.show {
+    padding: 15px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.toggle-icon.rotated {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Styles */
+.dropdown-section {
+    background: rgba(2, 6, 23, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.dropdown-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dropdown-header:hover {
+    background: rgba(30, 41, 59, 0.9);
+}
+
+.dropdown-header.active {
+    background: rgba(30, 41, 59, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #22c55e;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dropdown-content {
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.dropdown-content.show {
+    padding: 20px;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+/* Attempted but Unsolved Problems Section */
+.unsolved-problems-container {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.unsolved-problem-item {
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid #ef4444;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.unsolved-problem-item:hover {
+    background: rgba(239, 68, 68, 0.15);
+    transform: translateX(5px);
+}
+
+.unsolved-problem-info {
+    flex-grow: 1;
+}
+
+.unsolved-problem-name {
+    color: #e5e7eb;
+    font-weight: 500;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.unsolved-problem-meta {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.attempt-count {
+    display: inline-block;
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    margin-left: 8px;
+}
+
+.unsolved-problem-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #94a3b8;
+}
+
+.empty-state i {
+    font-size: 48px;
+    margin-bottom: 15px;
+    color: #22c55e;
+}
+
+/* Practice Time Styles */
+.practice-time-container {
+    display: none;
+}
+
+.practice-time-container.active {
+    display: block;
+}
+
+.practice-time-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.practice-time-card {
+    background: rgba(2, 6, 23, 0.7);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.practice-time-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.1);
+}
+
+.practice-time-value {
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+}
+
+.practice-time-label {
+    font-size: 13px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.practice-time-trend {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.trend-up {
+    color: #22c55e;
+}
+
+.trend-down {
+    color: #ef4444;
+}
+
+.trend-neutral {
+    color: #94a3b8;
+}
+
+/* Time Breakdown */
+.time-breakdown {
+    background: rgba(30, 41, 59, 0.8);
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.time-breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.time-breakdown-item:last-child {
+    border-bottom: none;
+}
+
+.time-breakdown-date {
+    font-weight: 500;
+    color: #e5e7eb;
+}
+
+.time-breakdown-value {
+    font-weight: bold;
+    color: #3b82f6;
+}
+
+.time-breakdown-trend {
+    font-size: 11px;
+    margin-left: 10px;
+}
+
+/* Practice Time Chart */
+.practice-time-chart {
+    height: 300px;
+    margin-top: 20px;
+}
+
+/* Tab Navigation for Practice Time */
+.practice-time-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.practice-time-tab {
+    background: rgba(30, 41, 59, 0.8);
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.practice-time-tab:hover {
+    background: rgba(30, 41, 59, 0.9);
+    transform: translateY(-2px);
+}
+
+.practice-time-tab.active {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Insights Card */
+.insights-card {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(30, 41, 59, 0.8) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.insights-title {
+    color: #3b82f6;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.insight-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 6px;
+    background: rgba(30, 41, 59, 0.5);
+}
+
+.insight-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.insight-icon.good {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.insight-icon.warning {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+}
+
+.insight-icon.bad {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+/* Daily Breakdown */
+.daily-breakdown-container {
+    max-height: 400px;
+    overflow-y: auto;
+    background: rgba(30, 41, 59, 0.8);
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.daily-breakdown-item {
+    padding: 12px;
+    margin-bottom: 8px;
+    background: rgba(15, 23, 42, 0.8);
+    border-radius: 8px;
+    border-left: 4px solid #3b82f6;
+}
+
+.daily-breakdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.daily-breakdown-date {
+    font-weight: 500;
+    color: #e5e7eb;
+}
+
+.daily-breakdown-time {
+    font-weight: bold;
+    color: #3b82f6;
+}
+
+.daily-breakdown-details {
+    font-size: 12px;
+    color: #94a3b8;
+    display: flex;
+    gap: 15px;
+}
+
+.daily-breakdown-detail {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Error Styles */
+.error-message {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.error-message i {
+    font-size: 48px;
+    color: #ef4444;
+    margin-bottom: 15px;
+}
+
+.error-message h3 {
+    color: #ef4444;
+    margin-bottom: 10px;
+}
+
+.error-message p {
+    color: #94a3b8;
+    margin-bottom: 15px;
+}
+
+.retry-button {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.retry-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
+}
+</style>
+<!-- Chart.js for visualizations -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">📊</span>
+                <span class="logo-text">Codeforces Tracker</span>
+            </a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="#" class="nav-link active" data-section="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-link" data-section="practice-time">
+                    <i class="fas fa-clock"></i>
+                    <span>Practice Time</span>
+                </a>
+                <a href="#" class="nav-link" data-section="analytics">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-link" data-section="leaderboard">
+                    <i class="fas fa-trophy"></i>
+                    <span>Leaderboard</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Dashboard Section (Default) -->
+        <div id="dashboard-section" class="dashboard-container">
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <h1>📊 Track Your Codeforces Journey</h1>
+                <p>Analyze your problem-solving patterns, track progress, and optimize your competitive programming strategy with detailed insights and visualizations.</p>
+            </div>
+
+            <!-- Main Form -->
+            <div class="form">
+                <div class="form-group">
+                    <label class="form-label" for="handle">
+                        <i class="fas fa-user"></i>
+                        <span>Codeforces Handle</span>
+                    </label>
+                    <input type="text" id="handle" class="form-control" placeholder="Enter your Codeforces handle (e.g., tourist)">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="specificDate">
+                        <i class="fas fa-calendar-day"></i>
+                        <span>Specific Date Analysis</span>
+                    </label>
+                    <input type="date" id="specificDate" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="showTopics" checked>
+                        <label for="showTopics">Show Topic-wise Stats</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="showDailyTopics" checked>
+                        <label for="showDailyTopics">Show Daily Topic Breakdown</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="showAllTopics" checked>
+                        <label for="showAllTopics">Show All Solved Topics</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="showRatingDistribution" checked>
+                        <label for="showRatingDistribution">Show Rating Distribution</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="showMonthlyProblems" checked>
+                        <label for="showMonthlyProblems">Show Monthly Problem Details</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="showUnsolvedProblems" checked>
+                        <label for="showUnsolvedProblems">Show Attempted but Unsolved Problems</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="monthSelect">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Select Month for Analysis</span>
+                    </label>
+                    <select id="monthSelect" class="form-control">
+                        <option value="">Select a month</option>
+                    </select>
+                </div>
+                
+                <button class="btn" onclick="fetchStats()" id="analyzeBtn">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Analyze Progress</span>
+                </button>
+            </div>
+
+            <!-- Output Area -->
+            <div id="output"></div>
+
+            <!-- Chart Container -->
+            <div class="chart-container">
+                <canvas id="monthlyChart"></canvas>
+            </div>
+            
+            <!-- Rating Chart Container -->
+            <div class="rating-chart-container">
+                <canvas id="ratingChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Practice Time Section -->
+        <div id="practice-time-section" class="practice-time-container">
+            <div class="hero-section">
+                <h1><i class="fas fa-clock"></i> Practice Time Tracker</h1>
+                <p>Track your daily practice time, analyze productivity trends, and optimize your learning schedule for maximum efficiency.</p>
+            </div>
+
+            <!-- Practice Time Tabs -->
+            <div class="practice-time-tabs">
+                <button class="practice-time-tab active" data-tab="today">Today</button>
+                <button class="practice-time-tab" data-tab="monthly">Monthly</button>
+                <button class="practice-time-tab" data-tab="yearly">Yearly</button>
+                <button class="practice-time-tab" data-tab="trends">Trends</button>
+            </div>
+
+            <!-- Practice Time Stats -->
+            <div id="practice-time-stats" class="practice-time-stats">
+                <!-- Stats will be populated by JavaScript -->
+            </div>
+
+            <!-- Today Tab Content -->
+            <div id="today-tab" class="practice-time-tab-content active">
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-calendar-day"></i>
+                        Today's Practice Breakdown
+                    </div>
+                    <div id="today-breakdown" class="daily-breakdown-container">
+                        <!-- Today's practice breakdown will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly Tab Content -->
+            <div id="monthly-tab" class="practice-time-tab-content">
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-calendar-alt"></i>
+                        Monthly Practice Overview
+                    </div>
+                    <div class="practice-time-chart">
+                        <canvas id="monthlyPracticeChart"></canvas>
+                    </div>
+                    <div id="monthly-breakdown" class="daily-breakdown-container">
+                        <!-- Monthly breakdown will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Yearly Tab Content -->
+            <div id="yearly-tab" class="practice-time-tab-content">
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-calendar-year"></i>
+                        Yearly Practice Overview
+                    </div>
+                    <div class="practice-time-chart">
+                        <canvas id="yearlyPracticeChart"></canvas>
+                    </div>
+                    <div id="yearly-breakdown" class="time-breakdown">
+                        <!-- Yearly breakdown will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trends Tab Content -->
+            <div id="trends-tab" class="practice-time-tab-content">
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-chart-line"></i>
+                        Practice Time Trends
+                    </div>
+                    <div class="insights-card">
+                        <div class="insights-title">
+                            <i class="fas fa-lightbulb"></i>
+                            Key Insights
+                        </div>
+                        <div id="trends-insights">
+                            <!-- Insights will be populated here -->
+                        </div>
+                    </div>
+                    <div class="practice-time-chart">
+                        <canvas id="trendsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Made with <i class="fas fa-heart" style="color: #ef4444;"></i> for competitive programmers</p>
+            <p>Data sourced from <a href="https://codeforces.com/api" target="_blank">Codeforces API</a></p>
+            <p style="margin-top: 10px; font-size: 12px; color: #94a3b8;">
+                <i class="fas fa-clock"></i> All times shown in Bangladesh Time (UTC+6)
+            </p>
+        </div>
+    </div>
+
+<script>
+let dailySolvedAll = {};
+let monthlyChart = null;
+let ratingChart = null;
+let monthlyPracticeChart = null;
+let yearlyPracticeChart = null;
+let trendsChart = null;
+let isLoading = false;
+let problemData = {};
+let unsolvedProblems = {};
+let practiceTimeData = {};
+let currentHandle = "";
+let currentPracticeTimeTab = "today";
+
+// Utility function to get rating class
+function getRatingClass(rating) {
+    if (!rating) return "rating-unsolved";
+    if (rating >= 800 && rating <= 1200) return "rating-800-1200";
+    if (rating >= 1300 && rating <= 1500) return "rating-1300-1500";
+    if (rating >= 1600 && rating <= 1900) return "rating-1600-1900";
+    if (rating >= 2000 && rating <= 2400) return "rating-2000-2400";
+    return "rating-2500-plus";
+}
+
+// Fetch with retry and proxy support
+async function fetchWithRetry(url, retries = 3) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            // Try with CORS proxy first
+            const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+            const proxyResponse = await fetch(proxyUrl);
+            
+            if (proxyResponse.ok) {
+                const data = await proxyResponse.json();
+                if (data.status === "OK" || data.result) {
+                    return data;
+                }
+            }
+        } catch (proxyError) {
+            console.log("Proxy fetch failed, trying direct...");
+        }
+        
+        try {
+            // Try direct with timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000);
+            
+            const directResponse = await fetch(url, { 
+                signal: controller.signal,
+                headers: {
+                    'Accept': 'application/json',
+                }
+            });
+            
+            clearTimeout(timeoutId);
+            
+            if (directResponse.ok) {
+                const data = await directResponse.json();
+                if (data.status === "OK" || data.result) {
+                    return data;
+                }
+            }
+        } catch (directError) {
+            console.log(`Attempt ${i + 1} failed:`, directError.message);
+            if (i === retries - 1) throw directError;
+            // Wait before retrying (exponential backoff)
+            await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, i)));
+        }
+    }
+    throw new Error("All fetch attempts failed");
+}
+
+// Helper function to show errors
+function showError(message) {
+    const outputDiv = document.getElementById("output");
+    if (typeof message === 'string' && message.includes('<')) {
+        outputDiv.innerHTML = message;
+    } else {
+        outputDiv.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <h3>Error</h3>
+                <p>${message}</p>
+                <button class="retry-button" onclick="fetchStats()">
+                    <i class="fas fa-redo"></i> Try Again
+                </button>
+            </div>
+        `;
+    }
+}
+
+// Mobile menu toggle
+document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+    const navLinks = document.getElementById('navLinks');
+    navLinks.classList.toggle('active');
+    this.innerHTML = navLinks.classList.contains('active') 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(event) {
+    const navLinks = document.getElementById('navLinks');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    
+    if (!navLinks.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+        navLinks.classList.remove('active');
+        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+    }
+});
+
+// Nav link click handler
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const section = this.getAttribute('data-section');
+        
+        // Update active nav link
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Show the selected section
+        showSection(section);
+        
+        // Close mobile menu
+        document.getElementById('navLinks').classList.remove('active');
+        document.getElementById('mobileMenuBtn').innerHTML = '<i class="fas fa-bars"></i>';
+    });
+});
+
+// Practice time tab click handler
+document.querySelectorAll('.practice-time-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        const tabId = this.getAttribute('data-tab');
+        
+        // Update active tab
+        document.querySelectorAll('.practice-time-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Show the selected tab content
+        showPracticeTimeTab(tabId);
+    });
+});
+
+// Function to show section
+function showSection(section) {
+    // Hide all sections
+    document.getElementById('dashboard-section').style.display = 'none';
+    document.getElementById('practice-time-section').classList.remove('active');
+    
+    // Show selected section
+    if (section === 'dashboard') {
+        document.getElementById('dashboard-section').style.display = 'block';
+    } else if (section === 'practice-time') {
+        document.getElementById('practice-time-section').classList.add('active');
+        
+        // If handle is set, load practice time data
+        const handle = document.getElementById("handle").value.trim();
+        if (handle && handle === currentHandle) {
+            loadPracticeTimeData();
+        } else if (handle) {
+            currentHandle = handle;
+            fetchStatsForPracticeTime();
+        }
+    }
+}
+
+// Function to show practice time tab
+function showPracticeTimeTab(tabId) {
+    // Hide all tab contents
+    document.querySelectorAll('.practice-time-tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    
+    // Show selected tab content
+    document.getElementById(`${tabId}-tab`).classList.add('active');
+    currentPracticeTimeTab = tabId;
+    
+    // Update charts if needed
+    if (tabId === 'monthly' && monthlyPracticeChart) {
+        monthlyPracticeChart.update();
+    } else if (tabId === 'yearly' && yearlyPracticeChart) {
+        yearlyPracticeChart.update();
+    } else if (tabId === 'trends' && trendsChart) {
+        trendsChart.update();
+    }
+}
+
+// Function to get Bangladesh Time (UTC+6)
+function getBangladeshTime() {
+    const now = new Date();
+    // Convert to Bangladesh Time (UTC+6)
+    const bangladeshOffset = 6 * 60; // UTC+6 in minutes
+    const localOffset = now.getTimezoneOffset(); // in minutes
+    const bangladeshTime = new Date(now.getTime() + (localOffset + bangladeshOffset) * 60000);
+    return bangladeshTime;
+}
+
+// Function to format date in Bangladesh Time
+function formatBangladeshDate(date) {
+    const dateObj = new Date(date + 'T00:00:00+06:00'); // Bangladesh Time
+    return dateObj.toLocaleDateString('en-US', { 
+        weekday: 'short', 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        timeZone: 'Asia/Dhaka'
+    });
+}
+
+// Function to get date string in YYYY-MM-DD format in Bangladesh Time
+function getBangladeshDateString(date) {
+    const bangladeshDate = getBangladeshTime();
+    const year = bangladeshDate.getFullYear();
+    const month = String(bangladeshDate.getMonth() + 1).padStart(2, '0');
+    const day = String(bangladeshDate.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+// Function to get month key in YYYY-MM format in Bangladesh Time
+function getBangladeshMonthKey(date) {
+    const bangladeshDate = getBangladeshTime();
+    const year = bangladeshDate.getFullYear();
+    const month = String(bangladeshDate.getMonth() + 1).padStart(2, '0');
+    return `${year}-${month}`;
+}
+
+// Function to convert submission timestamp to Bangladesh Time
+function getSubmissionBangladeshDate(timestampSeconds) {
+    const submissionDate = new Date(timestampSeconds * 1000);
+    // Convert to Bangladesh Time (UTC+6)
+    const bangladeshOffset = 6 * 60; // UTC+6 in minutes
+    const localOffset = submissionDate.getTimezoneOffset(); // in minutes
+    const bangladeshTime = new Date(submissionDate.getTime() + (localOffset + bangladeshOffset) * 60000);
+    
+    const year = bangladeshTime.getFullYear();
+    const month = String(bangladeshTime.getMonth() + 1).padStart(2, '0');
+    const day = String(bangladeshTime.getDate()).padStart(2, '0');
+    
+    return {
+        dateString: `${year}-${month}-${day}`,
+        monthKey: `${year}-${month}`,
+        dateObject: bangladeshTime
+    };
+}
+
+// Function to format time in hours and minutes
+function formatTime(minutes) {
+    if (minutes < 60) {
+        return `${minutes} min`;
+    } else {
+        const hours = Math.floor(minutes / 60);
+        const mins = minutes % 60;
+        return `${hours}h ${mins}m`;
+    }
+}
+
+// Function to calculate practice time from submissions
+function calculatePracticeTime(submissions) {
+    const dailyPractice = {};
+    
+    submissions.forEach(sub => {
+        if (sub.verdict === "OK") {
+            const bdSubmission = getSubmissionBangladeshDate(sub.creationTimeSeconds);
+            const date = bdSubmission.dateString;
+            
+            if (!dailyPractice[date]) {
+                dailyPractice[date] = {
+                    firstSubmission: sub.creationTimeSeconds,
+                    lastSubmission: sub.creationTimeSeconds,
+                    submissions: 0,
+                    problems: new Set()
+                };
+            }
+            
+            dailyPractice[date].submissions++;
+            dailyPractice[date].problems.add(`${sub.problem.contestId}-${sub.problem.index}`);
+            
+            // Update first and last submission times
+            if (sub.creationTimeSeconds < dailyPractice[date].firstSubmission) {
+                dailyPractice[date].firstSubmission = sub.creationTimeSeconds;
+            }
+            if (sub.creationTimeSeconds > dailyPractice[date].lastSubmission) {
+                dailyPractice[date].lastSubmission = sub.creationTimeSeconds;
+            }
+        }
+    });
+    
+    // Calculate practice time for each day
+    const result = {};
+    Object.keys(dailyPractice).forEach(date => {
+        const dayData = dailyPractice[date];
+        const timeDiff = dayData.lastSubmission - dayData.firstSubmission;
+        
+        // Convert to minutes
+        let practiceMinutes = Math.floor(timeDiff / 60);
+        
+        // Minimum practice time for days with submissions
+        if (practiceMinutes < 5 && dayData.submissions > 0) {
+            practiceMinutes = 5; // Assume at least 5 minutes if submissions were made
+        }
+        
+        // Cap at 8 hours (480 minutes) to filter out unrealistic times
+        if (practiceMinutes > 480) {
+            practiceMinutes = 480;
+        }
+        
+        result[date] = {
+            minutes: practiceMinutes,
+            submissions: dayData.submissions,
+            problems: dayData.problems.size,
+            firstSubmission: dayData.firstSubmission,
+            lastSubmission: dayData.lastSubmission
+        };
+    });
+    
+    return result;
+}
+
+// Function to fetch stats for practice time
+async function fetchStatsForPracticeTime() {
+    const handle = document.getElementById("handle").value.trim();
+    
+    if (!handle) { 
+        alert("Please enter your Codeforces handle first!");
+        // Switch to dashboard
+        document.querySelector('[data-section="dashboard"]').click();
+        return; 
+    }
+
+    // Show loading state
+    const practiceTimeStats = document.getElementById('practice-time-stats');
+    practiceTimeStats.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+            <div class="loading" style="width: 40px; height: 40px; margin: 0 auto 20px;"></div>
+            <p style="color: #94a3b8;">Loading practice time data...</p>
+        </div>
+    `;
+
+    try {
+        const url = `https://codeforces.com/api/user.status?handle=${handle}`;
+        const jsonData = await fetchWithRetry(url);
+
+        if (jsonData.status !== "OK") { 
+            alert("Invalid handle or API error! Please check your handle and try again."); 
+            return; 
+        }
+
+        const data = jsonData.result;
+        practiceTimeData = calculatePracticeTime(data);
+        currentHandle = handle;
+        
+        // Load practice time data
+        loadPracticeTimeData();
+        
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        practiceTimeStats.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #ef4444;">
+                <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 15px;"></i>
+                <p>Failed to fetch data. Please check your internet connection and try again.</p>
+            </div>
+        `;
+    }
+}
+
+// Function to load practice time data
+function loadPracticeTimeData() {
+    if (!practiceTimeData || Object.keys(practiceTimeData).length === 0) {
+        document.getElementById('practice-time-stats').innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #94a3b8;">
+                <i class="fas fa-clock" style="font-size: 48px; margin-bottom: 15px;"></i>
+                <p>No practice time data available. Please analyze your progress first from the Dashboard.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    updatePracticeTimeStats();
+    updateTodayBreakdown();
+    updateMonthlyPracticeChart();
+    updateYearlyPracticeChart();
+    updateTrendsInsights();
+    updateTrendsChart();
+}
+
+// Function to update practice time stats
+function updatePracticeTimeStats() {
+    const nowBD = getBangladeshTime();
+    const today = getBangladeshDateString(nowBD);
+    const currentMonth = getBangladeshMonthKey(nowBD);
+    
+    // Calculate today's practice time
+    let todayMinutes = practiceTimeData[today] ? practiceTimeData[today].minutes : 0;
+    
+    // Calculate monthly practice time
+    let monthlyMinutes = 0;
+    let monthlyDays = 0;
+    Object.keys(practiceTimeData).forEach(date => {
+        if (date.startsWith(currentMonth)) {
+            monthlyMinutes += practiceTimeData[date].minutes;
+            monthlyDays++;
+        }
+    });
+    
+    // Calculate yearly practice time
+    const currentYear = nowBD.getFullYear();
+    let yearlyMinutes = 0;
+    let yearlyDays = 0;
+    Object.keys(practiceTimeData).forEach(date => {
+        if (date.startsWith(currentYear.toString())) {
+            yearlyMinutes += practiceTimeData[date].minutes;
+            yearlyDays++;
+        }
+    });
+    
+    // Calculate average daily time
+    const avgDailyMinutes = yearlyDays > 0 ? Math.round(yearlyMinutes / yearlyDays) : 0;
+    
+    // Calculate trends (comparing with last month)
+    const lastMonthDate = new Date(nowBD.getFullYear(), nowBD.getMonth() - 1, 1);
+    const lastMonth = `${lastMonthDate.getFullYear()}-${String(lastMonthDate.getMonth() + 1).padStart(2, '0')}`;
+    
+    let lastMonthMinutes = 0;
+    Object.keys(practiceTimeData).forEach(date => {
+        if (date.startsWith(lastMonth)) {
+            lastMonthMinutes += practiceTimeData[date].minutes;
+        }
+    });
+    
+    const monthlyTrend = lastMonthMinutes > 0 ? 
+        Math.round(((monthlyMinutes - lastMonthMinutes) / lastMonthMinutes) * 100) : 0;
+    
+    const statsHTML = `
+        <div class="practice-time-card">
+            <div class="practice-time-value">${formatTime(todayMinutes)}</div>
+            <div class="practice-time-label">Today's Practice</div>
+            <div class="practice-time-trend ${todayMinutes > 60 ? 'trend-up' : todayMinutes > 30 ? 'trend-neutral' : 'trend-down'}">
+                ${todayMinutes > 60 ? '🔥 Productive' : todayMinutes > 30 ? '📈 Good' : '📉 Need more'}
+            </div>
+        </div>
+        
+        <div class="practice-time-card">
+            <div class="practice-time-value">${formatTime(monthlyMinutes)}</div>
+            <div class="practice-time-label">This Month</div>
+            <div class="practice-time-trend ${monthlyTrend > 0 ? 'trend-up' : monthlyTrend < 0 ? 'trend-down' : 'trend-neutral'}">
+                ${monthlyTrend > 0 ? `+${monthlyTrend}% vs last month` : 
+                  monthlyTrend < 0 ? `${monthlyTrend}% vs last month` : 'No change'}
+            </div>
+        </div>
+        
+        <div class="practice-time-card">
+            <div class="practice-time-value">${formatTime(yearlyMinutes)}</div>
+            <div class="practice-time-label">This Year</div>
+            <div class="practice-time-trend ${yearlyDays > 100 ? 'trend-up' : yearlyDays > 50 ? 'trend-neutral' : 'trend-down'}">
+                ${yearlyDays} active days
+            </div>
+        </div>
+        
+        <div class="practice-time-card">
+            <div class="practice-time-value">${formatTime(avgDailyMinutes)}</div>
+            <div class="practice-time-label">Daily Average</div>
+            <div class="practice-time-trend ${avgDailyMinutes > 60 ? 'trend-up' : avgDailyMinutes > 30 ? 'trend-neutral' : 'trend-down'}">
+                ${avgDailyMinutes > 60 ? 'Excellent' : avgDailyMinutes > 30 ? 'Good' : 'Can improve'}
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('practice-time-stats').innerHTML = statsHTML;
+}
+
+// Function to update today's breakdown
+function updateTodayBreakdown() {
+    const nowBD = getBangladeshTime();
+    const today = getBangladeshDateString(nowBD);
+    
+    let todayHTML = '';
+    
+    if (practiceTimeData[today]) {
+        const todayData = practiceTimeData[today];
+        const startTime = new Date(todayData.firstSubmission * 1000);
+        const endTime = new Date(todayData.lastSubmission * 1000);
+        
+        const startTimeStr = startTime.toLocaleTimeString('en-US', { 
+            hour: '2-digit', 
+            minute: '2-digit',
+            timeZone: 'Asia/Dhaka'
+        });
+        
+        const endTimeStr = endTime.toLocaleTimeString('en-US', { 
+            hour: '2-digit', 
+            minute: '2-digit',
+            timeZone: 'Asia/Dhaka'
+        });
+        
+        todayHTML = `
+            <div class="daily-breakdown-item">
+                <div class="daily-breakdown-header">
+                    <div class="daily-breakdown-date">${formatBangladeshDate(today)}</div>
+                    <div class="daily-breakdown-time">${formatTime(todayData.minutes)}</div>
+                </div>
+                <div class="daily-breakdown-details">
+                    <div class="daily-breakdown-detail">
+                        <i class="fas fa-play" style="color: #22c55e;"></i>
+                        <span>Started: ${startTimeStr}</span>
+                    </div>
+                    <div class="daily-breakdown-detail">
+                        <i class="fas fa-stop" style="color: #ef4444;"></i>
+                        <span>Ended: ${endTimeStr}</span>
+                    </div>
+                    <div class="daily-breakdown-detail">
+                        <i class="fas fa-code" style="color: #3b82f6;"></i>
+                        <span>${todayData.problems} problems</span>
+                    </div>
+                    <div class="daily-breakdown-detail">
+                        <i class="fas fa-paper-plane" style="color: #f59e0b;"></i>
+                        <span>${todayData.submissions} submissions</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        todayHTML = `
+            <div style="text-align: center; padding: 40px; color: #94a3b8;">
+                <i class="fas fa-clock" style="font-size: 48px; margin-bottom: 15px;"></i>
+                <p>No practice recorded for today yet. Start solving problems!</p>
+            </div>
+        `;
+    }
+    
+    document.getElementById('today-breakdown').innerHTML = todayHTML;
+}
+
+// Function to update monthly practice chart
+function updateMonthlyPracticeChart() {
+    const ctx = document.getElementById('monthlyPracticeChart').getContext('2d');
+    
+    if (monthlyPracticeChart) {
+        monthlyPracticeChart.destroy();
+    }
+    
+    const nowBD = getBangladeshTime();
+    const currentMonth = getBangladeshMonthKey(nowBD);
+    
+    // Filter data for current month
+    const monthData = {};
+    Object.keys(practiceTimeData).forEach(date => {
+        if (date.startsWith(currentMonth)) {
+            const day = parseInt(date.split('-')[2]);
+            monthData[day] = practiceTimeData[date].minutes;
+        }
+    });
+    
+    // Prepare chart data
+    const labels = [];
+    const data = [];
+    
+    const daysInMonth = new Date(nowBD.getFullYear(), nowBD.getMonth() + 1, 0).getDate();
+    
+    for (let day = 1; day <= daysInMonth; day++) {
+        labels.push(`Day ${day}`);
+        data.push(monthData[day] || 0);
+    }
+    
+    monthlyPracticeChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Practice Time (minutes)',
+                data: data,
+                backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                borderColor: 'rgba(59, 130, 246, 1)',
+                borderWidth: 2,
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '📅 Daily Practice Time This Month',
+                    color: '#e5e7eb',
+                    font: { 
+                        size: 16,
+                        weight: 'bold'
+                    },
+                    padding: { bottom: 20 }
+                },
+                legend: {
+                    labels: { 
+                        color: '#e5e7eb',
+                        font: { size: 12 }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(2, 6, 23, 0.9)',
+                    titleColor: '#3b82f6',
+                    bodyColor: '#cbd5e1',
+                    borderColor: 'rgba(59, 130, 246, 0.3)',
+                    borderWidth: 1,
+                    callbacks: {
+                        label: function(context) {
+                            return `Day ${context.dataIndex + 1}: ${context.raw} minutes`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { 
+                        color: '#94a3b8',
+                        font: { size: 10 }
+                    },
+                    grid: { 
+                        color: 'rgba(148, 163, 184, 0.1)'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Minutes',
+                        color: '#94a3b8',
+                        font: { size: 12 }
+                    },
+                    ticks: { 
+                        color: '#94a3b8',
+                        font: { size: 10 }
+                    },
+                    grid: { 
+                        color: 'rgba(148, 163, 184, 0.1)'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    
+    // Update monthly breakdown
+    updateMonthlyBreakdown();
+}
+
+// Function to update monthly breakdown
+function updateMonthlyBreakdown() {
+    const nowBD = getBangladeshTime();
+    const currentMonth = getBangladeshMonthKey(nowBD);
+    
+    // Get all days for current month
+    const monthDays = Object.keys(practiceTimeData)
+        .filter(date => date.startsWith(currentMonth))
+        .sort((a, b) => new Date(b) - new Date(a))
+        .slice(0, 10); // Show last 10 days
+    
+    let monthlyHTML = '';
+    
+    if (monthDays.length > 0) {
+        monthDays.forEach(date => {
+            const dayData = practiceTimeData[date];
+            monthlyHTML += `
+                <div class="daily-breakdown-item">
+                    <div class="daily-breakdown-header">
+                        <div class="daily-breakdown-date">${formatBangladeshDate(date)}</div>
+                        <div class="daily-breakdown-time">${formatTime(dayData.minutes)}</div>
+                    </div>
+                    <div class="daily-breakdown-details">
+                        <div class="daily-breakdown-detail">
+                            <i class="fas fa-code" style="color: #3b82f6;"></i>
+                            <span>${dayData.problems} problems</span>
+                        </div>
+                        <div class="daily-breakdown-detail">
+                            <i class="fas fa-paper-plane" style="color: #f59e0b;"></i>
+                            <span>${dayData.submissions} submissions</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    } else {
+        monthlyHTML = `
+            <div style="text-align: center; padding: 40px; color: #94a3b8;">
+                <i class="fas fa-calendar" style="font-size: 48px; margin-bottom: 15px;"></i>
+                <p>No practice recorded for this month yet.</p>
+            </div>
+        `;
+    }
+    
+    document.getElementById('monthly-breakdown').innerHTML = monthlyHTML;
+}
+
+// Function to update yearly practice chart
+function updateYearlyPracticeChart() {
+    const ctx = document.getElementById('yearlyPracticeChart').getContext('2d');
+    
+    if (yearlyPracticeChart) {
+        yearlyPracticeChart.destroy();
+    }
+    
+    const nowBD = getBangladeshTime();
+    const currentYear = nowBD.getFullYear();
+    
+    // Group data by month
+    const monthData = {};
+    for (let month = 1; month <= 12; month++) {
+        monthData[month] = 0;
+    }
+    
+    Object.keys(practiceTimeData).forEach(date => {
+        if (date.startsWith(currentYear.toString())) {
+            const month = parseInt(date.split('-')[1]);
+            monthData[month] += practiceTimeData[date].minutes;
+        }
+    });
+    
+    // Prepare chart data
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const labels = monthNames;
+    const data = Object.values(monthData);
+    
+    yearlyPracticeChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Practice Time (minutes)',
+                data: data,
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                borderColor: 'rgba(59, 130, 246, 1)',
+                borderWidth: 3,
+                pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                pointRadius: 6,
+                tension: 0.3,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '📈 Monthly Practice Time This Year',
+                    color: '#e5e7eb',
+                    font: { 
+                        size: 16,
+                        weight: 'bold'
+                    },
+                    padding: { bottom: 20 }
+                },
+                legend: {
+                    labels: { 
+                        color: '#e5e7eb',
+                        font: { size: 12 }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(2, 6, 23, 0.9)',
+                    titleColor: '#3b82f6',
+                    bodyColor: '#cbd5e1',
+                    borderColor: 'rgba(59, 130, 246, 0.3)',
+                    borderWidth: 1,
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.label}: ${formatTime(context.raw)}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { 
+                        color: '#94a3b8',
+                        font: { size: 10 }
+                    },
+                    grid: { 
+                        color: 'rgba(148, 163, 184, 0.1)'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Minutes',
+                        color: '#94a3b8',
+                        font: { size: 12 }
+                    },
+                    ticks: { 
+                        color: '#94a3b8',
+                        font: { size: 10 }
+                    },
+                    grid: { 
+                        color: 'rgba(148, 163, 184, 0.1)'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+// Function to update trends insights
+function updateTrendsInsights() {
+    const nowBD = getBangladeshTime();
+    const currentMonth = getBangladeshMonthKey(nowBD);
+    const currentYear = nowBD.getFullYear();
+    
+    // Calculate insights
+    const activeDays = Object.keys(practiceTimeData).length;
+    const totalMinutes = Object.values(practiceTimeData).reduce((sum, day) => sum + day.minutes, 0);
+    const avgMinutesPerDay = activeDays > 0 ? Math.round(totalMinutes / activeDays) : 0;
+    
+    // Find best and worst days
+    let bestDay = { date: '', minutes: 0 };
+    let worstDay = { date: '', minutes: Infinity };
+    
+    Object.keys(practiceTimeData).forEach(date => {
+        const minutes = practiceTimeData[date].minutes;
+        if (minutes > bestDay.minutes) {
+            bestDay = { date, minutes };
+        }
+        if (minutes < worstDay.minutes) {
+            worstDay = { date, minutes };
+        }
+    });
+    
+    // Calculate consistency (days with at least 30 minutes)
+    const productiveDays = Object.values(practiceTimeData).filter(day => day.minutes >= 30).length;
+    const consistency = activeDays > 0 ? Math.round((productiveDays / activeDays) * 100) : 0;
+    
+    const insightsHTML = `
+        <div class="insight-item">
+            <div class="insight-icon ${activeDays > 50 ? 'good' : activeDays > 20 ? 'warning' : 'bad'}">
+                ${activeDays > 50 ? '✓' : activeDays > 20 ? '!' : '✗'}
+            </div>
+            <div>
+                <div style="font-weight: 500; color: #e5e7eb;">${activeDays} Active Days</div>
+                <div style="font-size: 12px; color: #94a3b8;">You've practiced on ${activeDays} different days</div>
+            </div>
+        </div>
+        
+        <div class="insight-item">
+            <div class="insight-icon ${avgMinutesPerDay > 60 ? 'good' : avgMinutesPerDay > 30 ? 'warning' : 'bad'}">
+                ${avgMinutesPerDay > 60 ? '✓' : avgMinutesPerDay > 30 ? '!' : '✗'}
+            </div>
+            <div>
+                <div style="font-weight: 500; color: #e5e7eb;">${formatTime(avgMinutesPerDay)} Daily Average</div>
+                <div style="font-size: 12px; color: #94a3b8;">${avgMinutesPerDay > 60 ? 'Excellent consistency!' : avgMinutesPerDay > 30 ? 'Good effort!' : 'Try to practice more daily'}</div>
+            </div>
+        </div>
+        
+        <div class="insight-item">
+            <div class="insight-icon ${consistency > 70 ? 'good' : consistency > 40 ? 'warning' : 'bad'}">
+                ${consistency > 70 ? '✓' : consistency > 40 ? '!' : '✗'}
+            </div>
+            <div>
+                <div style="font-weight: 500; color: #e5e7eb;">${consistency}% Consistency</div>
+                <div style="font-size: 12px; color: #94a3b8;">${productiveDays} out of ${activeDays} days were productive (30+ mins)</div>
+            </div>
+        </div>
+        
+        <div class="insight-item">
+            <div class="insight-icon good">
+                👑
+            </div>
+            <div>
+                <div style="font-weight: 500; color: #e5e7eb;">Best Day: ${bestDay.date ? formatBangladeshDate(bestDay.date) : 'N/A'}</div>
+                <div style="font-size: 12px; color: #94a3b8;">${bestDay.minutes ? formatTime(bestDay.minutes) : '0 min'} of practice</div>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('trends-insights').innerHTML = insightsHTML;
+}
+
+// Function to update trends chart
+function updateTrendsChart() {
+    const ctx = document.getElementById('trendsChart').getContext('2d');
+    
+    if (trendsChart) {
+        trendsChart.destroy();
+    }
+    
+    // Get last 30 days of data
+    const dates = Object.keys(practiceTimeData).sort((a, b) => new Date(b) - new Date(a)).slice(0, 30).reverse();
+    const labels = dates.map(date => date.split('-')[2]);
+    const data = dates.map(date => practiceTimeData[date].minutes);
+    
+    // Calculate 7-day moving average
+    const movingAvg = [];
+    for (let i = 0; i < data.length; i++) {
+        const start = Math.max(0, i - 6);
+        const slice = data.slice(start, i + 1);
+        const avg = Math.round(slice.reduce((a, b) => a + b, 0) / slice.length);
+        movingAvg.push(avg);
+    }
+    
+    trendsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Daily Practice',
+                    data: data,
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderWidth: 2,
+                    pointRadius: 3,
+                    tension: 0.2
+                },
+                {
+                    label: '7-Day Average',
+                    data: movingAvg,
+                    borderColor: 'rgba(34, 197, 94, 1)',
+                    backgroundColor: 'transparent',
+                    borderWidth: 3,
+                    borderDash: [5, 5],
+                    pointRadius: 0,
+                    tension: 0.2
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '📊 Practice Time Trends (Last 30 Days)',
+                    color: '#e5e7eb',
+                    font: { 
+                        size: 16,
+                        weight: 'bold'
+                    },
+                    padding: { bottom: 20 }
+                },
+                legend: {
+                    labels: { 
+                        color: '#e5e7eb',
+                        font: { size: 12 }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(2, 6, 23, 0.9)',
+                    titleColor: '#3b82f6',
+                    bodyColor: '#cbd5e1',
+                    borderColor: 'rgba(59, 130, 246, 0.3)',
+                    borderWidth: 1,
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.dataset.label}: ${formatTime(context.raw)}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Day',
+                        color: '#94a3b8',
+                        font: { size: 12 }
+                    },
+                    ticks: { 
+                        color: '#94a3b8',
+                        font: { size: 10 }
+                    },
+                    grid: { 
+                        color: 'rgba(148, 163, 184, 0.1)'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Minutes',
+                        color: '#94a3b8',
+                        font: { size: 12 }
+                    },
+                    ticks: { 
+                        color: '#94a3b8',
+                        font: { size: 10 }
+                    },
+                    grid: { 
+                        color: 'rgba(148, 163, 184, 0.1)'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+// Function to toggle dropdown sections
+function toggleDropdown(header) {
+    const content = header.nextElementSibling;
+    const icon = header.querySelector('.toggle-icon');
+    
+    if (content.classList.contains('show')) {
+        content.classList.remove('show');
+        header.classList.remove('active');
+        icon.classList.remove('rotated');
+    } else {
+        content.classList.add('show');
+        header.classList.add('active');
+        icon.classList.add('rotated');
+    }
+}
+
+// Function to toggle month day details
+function toggleMonthDay(header) {
+    const content = header.nextElementSibling;
+    const icon = header.querySelector('.toggle-icon');
+    
+    if (content.classList.contains('show')) {
+        content.classList.remove('show');
+        header.classList.remove('active');
+        icon.classList.remove('rotated');
+    } else {
+        content.classList.add('show');
+        header.classList.add('active');
+        icon.classList.add('rotated');
+    }
+}
+
+async function fetchStats() {
+    const handle = document.getElementById("handle").value.trim();
+    const specificDate = document.getElementById("specificDate").value;
+    const showTopics = document.getElementById("showTopics").checked;
+    const showDailyTopics = document.getElementById("showDailyTopics").checked;
+    const showAllTopics = document.getElementById("showAllTopics").checked;
+    const showRatingDistribution = document.getElementById("showRatingDistribution").checked;
+    const showMonthlyProblems = document.getElementById("showMonthlyProblems").checked;
+    const showUnsolvedProblems = document.getElementById("showUnsolvedProblems").checked;
+    const monthSelect = document.getElementById("monthSelect").value;
+    const analyzeBtn = document.getElementById("analyzeBtn");
+    const outputDiv = document.getElementById("output");
+
+    if (!handle) { 
+        showError("Please enter your Codeforces handle!");
+        return; 
+    }
+
+    // Show loading state
+    isLoading = true;
+    analyzeBtn.innerHTML = '<span class="loading"></span> <span>Analyzing...</span>';
+    analyzeBtn.disabled = true;
+    outputDiv.innerHTML = `
+        <div style="text-align: center; padding: 40px; color: #94a3b8;">
+            <div class="loading" style="width: 40px; height: 40px; margin: 0 auto 20px;"></div>
+            <p>Fetching data from Codeforces API...</p>
+            <p style="font-size: 12px; margin-top: 10px;">This may take a moment</p>
+        </div>
+    `;
+
+    try {
+        const url = `https://codeforces.com/api/user.status?handle=${handle}`;
+        const jsonData = await fetchWithRetry(url);
+
+        if (jsonData.status !== "OK") { 
+            if (jsonData.comment && jsonData.comment.includes("not found")) {
+                showError("Handle not found! Please check the handle and try again.");
+            } else {
+                showError("API error! Please try again later.");
+            }
+            return; 
+        }
+
+        const data = jsonData.result;
+        const solved = new Set();
+        const ratingCount = {};
+        const topicCount = {};
+        const dailySolved = {};
+        dailySolvedAll = {};
+        problemData = {};
+        unsolvedProblems = {};
+        
+        // Track attempted but unsolved problems for the selected month
+        const attemptedButUnsolved = {};
+        
+        // Track total attempts for problems
+        const problemAttempts = {};
+        const problemLastAttemptDate = {};
+        
+        let totalAcceptedSubmissions = 0;
+        let totalAttempts = 0;
+        let totalUnsolvedAttempts = 0;
+
+        // Get current Bangladesh time
+        const nowBD = getBangladeshTime();
+        const todayBD = getBangladeshDateString(nowBD);
+        
+        // Calculate last month and last year in Bangladesh time
+        const lastMonthBD = new Date(nowBD.getTime() - (30 * 24 * 60 * 60 * 1000));
+        const lastYearBD = new Date(nowBD.getTime() - (365 * 24 * 60 * 60 * 1000));
+        
+        // Format for comparison
+        const lastMonthDate = lastMonthBD.toISOString().split('T')[0];
+        const lastYearDate = lastYearBD.toISOString().split('T')[0];
+
+        let todayCnt=0, lastMonthCnt=0, lastYearCnt=0, specificCnt=0, midRangeCnt=0;
+
+        const monthSet = new Set();
+
+        data.forEach(sub=>{
+            totalAttempts++;
+            
+            const pid = `${sub.problem.contestId}-${sub.problem.index}`;
+            const problemKey = `${sub.problem.contestId}${sub.problem.index}`;
+            
+            // Convert submission time to Bangladesh Time
+            const bdSubmission = getSubmissionBangladeshDate(sub.creationTimeSeconds);
+            const subDate = bdSubmission.dateString;
+            const monthKey = bdSubmission.monthKey;
+            const subDateObjBD = bdSubmission.dateObject;
+            
+            monthSet.add(monthKey);
+            
+            // Track problem attempts
+            if (!problemAttempts[pid]) {
+                problemAttempts[pid] = { attempts: 0, lastAttemptDate: subDate, verdicts: new Set() };
+            }
+            problemAttempts[pid].attempts++;
+            problemAttempts[pid].lastAttemptDate = subDate;
+            problemAttempts[pid].verdicts.add(sub.verdict);
+
+            if(sub.verdict!=="OK") {
+                totalUnsolvedAttempts++;
+                
+                // Track attempted but unsolved problems for the selected month
+                const selectedMonth = monthSelect || getBangladeshMonthKey(nowBD);
+                if (monthKey === selectedMonth) {
+                    if (!attemptedButUnsolved[pid]) {
+                        attemptedButUnsolved[pid] = {
+                            contestId: sub.problem.contestId,
+                            index: sub.problem.index,
+                            name: sub.problem.name,
+                            rating: sub.problem.rating,
+                            tags: sub.problem.tags || [],
+                            attempts: 0,
+                            lastAttemptDate: subDate,
+                            verdicts: new Set()
+                        };
+                    }
+                    attemptedButUnsolved[pid].attempts++;
+                    attemptedButUnsolved[pid].lastAttemptDate = subDate;
+                    attemptedButUnsolved[pid].verdicts.add(sub.verdict);
+                }
+            }
+
+            if(!dailySolved[subDate]) {
+                dailySolved[subDate] = {
+                    problems: new Set(),
+                    problemDetails: [],
+                    topics: {}
+                };
+            }
+
+            if(!dailySolvedAll[monthKey]) dailySolvedAll[monthKey] = {};
+            if(!dailySolvedAll[monthKey][subDate]) {
+                dailySolvedAll[monthKey][subDate] = {
+                    problems: new Set(),
+                    problemDetails: [],
+                    topics: {}
+                };
+            }
+
+            if(sub.verdict==="OK") {
+                totalAcceptedSubmissions++;
+                
+                // Store problem details
+                const problemDetail = {
+                    contestId: sub.problem.contestId,
+                    index: sub.problem.index,
+                    name: sub.problem.name,
+                    rating: sub.problem.rating,
+                    tags: sub.problem.tags || []
+                };
+
+                // Add to daily problems if not already added
+                if(!dailySolved[subDate].problems.has(pid)) {
+                    dailySolved[subDate].problems.add(pid);
+                    dailySolved[subDate].problemDetails.push(problemDetail);
+                }
+
+                if(!dailySolvedAll[monthKey][subDate].problems.has(pid)) {
+                    dailySolvedAll[monthKey][subDate].problems.add(pid);
+                    dailySolvedAll[monthKey][subDate].problemDetails.push(problemDetail);
+                }
+
+                // If problem is now solved, remove from attempted but unsolved for the month
+                if (attemptedButUnsolved[pid]) {
+                    delete attemptedButUnsolved[pid];
+                }
+            }
+
+            // Count unique solved problems
+            if(sub.verdict==="OK" && !solved.has(pid)) {
+                solved.add(pid);
+
+                // Count based on Bangladesh time
+                if(subDate===todayBD) todayCnt++;
+                
+                // Compare with Bangladesh time dates
+                const submissionDateStr = subDateObjBD.toISOString().split('T')[0];
+                if(submissionDateStr >= lastMonthDate) lastMonthCnt++;
+                if(submissionDateStr >= lastYearDate) lastYearCnt++;
+                
+                if(specificDate && subDate===specificDate) specificCnt++;
+
+                const rating = sub.problem.rating;
+                if(rating){
+                    ratingCount[rating] = (ratingCount[rating]||0)+1;
+                    if(rating>=800 && rating<=1500) midRangeCnt++;
+                }
+
+                if(sub.problem.tags && sub.problem.tags.length > 0) {
+                    sub.problem.tags.forEach(tag=>{
+                        topicCount[tag] = (topicCount[tag]||0)+1;
+                        dailySolved[subDate].topics[tag] = (dailySolved[subDate].topics[tag] || 0) + 1;
+                        if (dailySolvedAll[monthKey][subDate]) {
+                            dailySolvedAll[monthKey][subDate].topics[tag] = (dailySolvedAll[monthKey][subDate].topics[tag] || 0) + 1;
+                        }
+                    });
+                }
+            } else if (sub.verdict!=="OK") {
+                // Update topic counts for attempted but unsolved problems
+                if(sub.problem.tags && sub.problem.tags.length > 0) {
+                    sub.problem.tags.forEach(tag=>{
+                        dailySolved[subDate].topics[tag] = (dailySolved[subDate].topics[tag] || 0) + 1;
+                        if (dailySolvedAll[monthKey][subDate]) {
+                            dailySolvedAll[monthKey][subDate].topics[tag] = (dailySolvedAll[monthKey][subDate].topics[tag] || 0) + 1;
+                        }
+                    });
+                }
+            }
+        });
+
+        // Also calculate practice time data
+        practiceTimeData = calculatePracticeTime(data);
+        currentHandle = handle;
+
+        // Fill month dropdown
+        const monthSelectElem = document.getElementById("monthSelect");
+        monthSelectElem.innerHTML="<option value=''>Select a month</option>";
+        const monthArray = Array.from(monthSet).sort();
+        monthArray.forEach(m=>{
+            const opt = document.createElement("option");
+            opt.value=m; opt.text=m;
+            monthSelectElem.appendChild(opt);
+        });
+        
+        // Set default to current month in Bangladesh time
+        const currentMonthBD = getBangladeshMonthKey(nowBD);
+        if (monthArray.includes(currentMonthBD)) {
+            monthSelectElem.value = currentMonthBD;
+        }
+
+        // Define the specific dates to exclude for handle "ashikullah"
+        const ashikullahExcludedDates = ["2023-11-02", "2023-11-03"];
+        
+        // Best & Second Best day (excluding specific date, today, and special dates for ashikullah)
+        const sortedDays = Object.entries(dailySolved)
+            .filter(([date]) => {
+                let exclude = false;
+                if (date === specificDate) exclude = true;
+                if (date === todayBD) exclude = true;
+                if (handle.toLowerCase() === "ashikullah" && ashikullahExcludedDates.includes(date)) exclude = true;
+                return !exclude;
+            })
+            .sort((a,b)=>b[1].problems.size - a[1].problems.size);
+        
+        let bestDay = sortedDays[0] || ["-", {problems: new Set(), problemDetails: [], topics: {}}];
+        let secondDay = sortedDays[1] || ["-", {problems: new Set(), problemDetails: [], topics: {}}];
+        const bestDayCount = bestDay[1].problems.size;
+        const secondDayCount = secondDay[1].problems.size;
+
+        // Format date for display in Bangladesh Time
+        const formatDateBD = (dateStr) => {
+            if (dateStr === "-") return "N/A";
+            const date = new Date(dateStr + 'T00:00:00+06:00');
+            return date.toLocaleDateString('en-US', { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                timeZone: 'Asia/Dhaka'
+            });
+        };
+
+        // Function to format topic breakdown
+        const formatTopicBreakdown = (topics) => {
+            if (!topics || Object.keys(topics).length === 0) return "No topics";
+            const sorted = Object.entries(topics).sort((a,b) => b[1] - a[1]);
+            return sorted.map(([topic, count]) => `${topic}:${count}`).join(", ");
+        };
+
+        let level="Beginner";
+        if(solved.size>=300) level="Learning Phase";
+        if(solved.size>=600) level="Competitive Ready";
+        if(solved.size>=1000) level="Advanced";
+
+        // Create stats grid
+        const unsolvedProblemsCount = Object.keys(attemptedButUnsolved).length;
+        let output = `
+        <div class="stats-grid">
+            <div class="stats-box">
+                <div class="stats-number">${solved.size}</div>
+                <div class="stats-label">Total Solved</div>
+                <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">${totalAcceptedSubmissions} total submissions</div>
+            </div>
+            <div class="stats-box">
+                <div class="stats-number">${todayCnt}</div>
+                <div class="stats-label">Today (BD Time)</div>
+            </div>
+            <div class="stats-box">
+                <div class="stats-number">${lastMonthCnt}</div>
+                <div class="stats-label">Last 30 Days</div>
+            </div>
+            <div class="stats-box">
+                <div class="stats-number">${lastYearCnt}</div>
+                <div class="stats-label">Last 365 Days</div>
+            </div>
+            <div class="stats-box">
+                <div class="stats-number">${midRangeCnt}</div>
+                <div class="stats-label">800-1500 Problems</div>
+            </div>
+            <div class="stats-box">
+                <div class="stats-number">${unsolvedProblemsCount}</div>
+                <div class="stats-label">Attempted but Unsolved</div>
+                <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">${totalUnsolvedAttempts} failed attempts</div>
+            </div>
+            <div class="stats-box">
+                <div class="stats-number">${bestDayCount}</div>
+                <div class="stats-label">Best Day</div>
+            </div>
+        </div>`;
+
+        // Add Best Day Records Card
+        let excludedDatesText = "";
+        if (specificDate) excludedDatesText += `${specificDate}, `;
+        excludedDatesText += "Today";
+        if (handle.toLowerCase() === "ashikullah") excludedDatesText += ", Nov 2-3, 2023";
+        
+        output += `
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-trophy"></i>
+                All-Time Best Days (Bangladesh Time)
+            </div>
+            <p style="color: #94a3b8; margin-bottom: 15px; font-size: 14px;">Excluding ${excludedDatesText}</p>
+            <div class="day-records">
+                <div class="day-record">
+                    <div class="day-number">${bestDayCount}</div>
+                    <div class="day-date">${formatDateBD(bestDay[0])}</div>
+                    ${showDailyTopics ? 
+                        `<div class="day-topic-details">${formatTopicBreakdown(bestDay[1].topics)}</div>` : ''}
+                    <div style="font-size:12px; color:#22c55e; margin-top:8px;">#1 Best Day</div>
+                </div>
+                <div class="day-record">
+                    <div class="day-number">${secondDayCount}</div>
+                    <div class="day-date">${formatDateBD(secondDay[0])}</div>
+                    ${showDailyTopics ? 
+                        `<div class="day-topic-details">${formatTopicBreakdown(secondDay[1].topics)}</div>` : ''}
+                    <div style="font-size:12px; color:#f59e0b; margin-top:8px;">#2 Best Day</div>
+                </div>
+            </div>`;
+        
+        // Show excluded dates with their counts
+        output += `<div style="text-align:center; font-size:12px; color:#94a3b8; margin-top:15px; padding-top:15px; border-top:1px solid rgba(255,255,255,0.1);">`;
+        if (specificDate && dailySolved[specificDate]) {
+            output += `<div><i class="fas fa-calendar-check"></i> ${specificDate} (excluded): ${dailySolved[specificDate].problems.size} problems</div>`;
+        }
+        if (handle.toLowerCase() === "ashikullah") {
+            ashikullahExcludedDates.forEach(excludedDate => {
+                if (dailySolved[excludedDate]) {
+                    const formattedDate = formatDateBD(excludedDate);
+                    output += `<div><i class="fas fa-user-slash"></i> ${formattedDate} (excluded for ashikullah): ${dailySolved[excludedDate].problems.size} problems</div>`;
+                }
+            });
+        }
+        if (todayCnt > 0) {
+            output += `<div><i class="fas fa-sun"></i> Today (excluded): ${todayCnt} problems</div>`;
+        }
+        output += `</div></div>`;
+
+        // Add level card
+        output += `
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-user-graduate"></i>
+                Progress Level
+            </div>
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                <div style="font-size: 24px; font-weight: bold; color: #22c55e;">${level}</div>
+                <div style="padding: 6px 12px; background: ${midRangeCnt<50?"rgba(239, 68, 68, 0.2)":midRangeCnt<120?"rgba(251, 191, 36, 0.2)":"rgba(34, 197, 94, 0.2)"}; 
+                    color: ${midRangeCnt<50?"#ef4444":midRangeCnt<120?"#f59e0b":"#22c55e"}; 
+                    border-radius: 20px; font-size: 12px; font-weight: bold;">
+                    ${midRangeCnt<50?"🔴 Need Practice":midRangeCnt<120?"🟡 On the way to Pupil":"🟢 Pupil-ready"}
+                </div>
+            </div>
+            ${specificDate?`<div style="color: #cbd5e1;"><i class="fas fa-calendar-day"></i> Solved on ${specificDate}: <b>${specificCnt}</b> problems</div>`:""}
+            <div style="color: #94a3b8; font-size: 12px; margin-top: 10px;">
+                <i class="fas fa-clock"></i> All dates and times shown in Bangladesh Time (UTC+6)
+            </div>
+        </div>`;
+
+        // Month-wise statistics
+        const selectedMonth = monthSelect || currentMonthBD;
+        if (dailySolvedAll[selectedMonth]) {
+            const days = Object.entries(dailySolvedAll[selectedMonth]).sort((a,b)=>a[0].localeCompare(b[0]));
+            let totalProblemsInMonth = 0;
+            let activeDaysCount = 0;
+            
+            // Find best day in this month (excluding specific date, today, and special dates for ashikullah)
+            let monthBestDay = ["-", {problems: new Set(), problemDetails: [], topics: {}}];
+            let monthSecondBestDay = ["-", {problems: new Set(), problemDetails: [], topics: {}}];
+            
+            days.forEach(([date, dayData]) => {
+                const problemCount = dayData.problems.size;
+                if (problemCount > 0) {
+                    totalProblemsInMonth += problemCount;
+                    activeDaysCount++;
+                    
+                    // Check for best day in month (excluding specific date, today, and special dates for ashikullah)
+                    const shouldExclude = 
+                        date === specificDate || 
+                        date === todayBD || 
+                        (handle.toLowerCase() === "ashikullah" && ashikullahExcludedDates.includes(date));
+                    
+                    if (!shouldExclude && problemCount > monthBestDay[1].problems.size) {
+                        monthSecondBestDay = [...monthBestDay];
+                        monthBestDay = [date, dayData];
+                    } else if (!shouldExclude && problemCount > monthSecondBestDay[1].problems.size) {
+                        monthSecondBestDay = [date, dayData];
+                    }
+                }
+            });
+            
+            output += `
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div class="card-title">
+                        <i class="fas fa-calendar-alt"></i>
+                        ${selectedMonth} Performance (Bangladesh Time)
+                    </div>
+                    <div style="background: rgba(30, 41, 59, 0.8); padding: 8px 16px; border-radius: 20px; font-size: 14px;">
+                        <b>${activeDaysCount}</b> days solved, <b>${totalProblemsInMonth}</b> problems
+                    </div>
+                </div>`;
+            
+            // Show monthly best days
+            if (monthBestDay[0] !== "-") {
+                output += `
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:15px; margin:20px 0;">
+                    <div style="background: rgba(30, 41, 59, 0.8); padding:15px; border-radius:10px; border-left:4px solid #22c55e;">
+                        <div style="color:#22c55e; font-weight:bold; margin-bottom:8px;">Best Day</div>
+                        <div style="font-size:28px; font-weight:bold; color:#fbbf24;">${monthBestDay[1].problems.size}</div>
+                        <div style="font-size:12px; color:#94a3b8; margin-top:5px;">${formatDateBD(monthBestDay[0])}</div>
+                        ${showDailyTopics ? 
+                            `<div style="font-size:11px; color:#64748b; margin-top:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.1);">
+                                ${formatTopicBreakdown(monthBestDay[1].topics)}
+                            </div>` : ''}
+                    </div>
+                    ${monthSecondBestDay[0] !== "-" ? `
+                    <div style="background: rgba(30, 41, 59, 0.8); padding:15px; border-radius:10px; border-left:4px solid #f59e0b;">
+                        <div style="color:#f59e0b; font-weight:bold; margin-bottom:8px;">2nd Best Day</div>
+                        <div style="font-size:28px; font-weight:bold; color:#fbbf24;">${monthSecondBestDay[1].problems.size}</div>
+                        <div style="font-size:12px; color:#94a3b8; margin-top:5px;">${formatDateBD(monthSecondBestDay[0])}</div>
+                        ${showDailyTopics ? 
+                            `<div style="font-size:11px; color:#64748b; margin-top:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.1);">
+                                ${formatTopicBreakdown(monthSecondBestDay[1].topics)}
+                            </div>` : ''}
+                    </div>` : ''}
+                </div>`;
+            }
+            
+            // Show days with problems
+            if (days.length > 0 && showMonthlyProblems) {
+                output += `<div style="margin-top:20px;">`;
+                output += `<div style="color:#94a3b8; font-size:12px; margin-bottom:10px; text-transform:uppercase; letter-spacing:1px;">Solved Problems Breakdown (Bangladesh Time)</div>`;
+                
+                days.forEach(([d, dayData]) => {
+                    if (dayData.problems.size > 0) {
+                        const isBest = d === monthBestDay[0];
+                        const isSecondBest = d === monthSecondBestDay[0];
+                        const isToday = d === todayBD;
+                        const isSpecificDate = d === specificDate;
+                        const isAshikullahSpecial = (handle.toLowerCase() === "ashikullah" && ashikullahExcludedDates.includes(d));
+                        let badge = '';
+                        let extraLabel = '';
+                        
+                        if (isBest) badge = '<span class="badge badge-primary">🏆 Best</span>';
+                        else if (isSecondBest) badge = '<span class="badge badge-warning">🥈 2nd Best</span>';
+                        else if (isToday) badge = '<span style="color:#22c55e;">📌</span>';
+                        else if (isSpecificDate) badge = '<span style="color:#8b5cf6;">📍</span>';
+                        else if (isAshikullahSpecial) badge = '<span style="color:#ef4444;">🔴</span>';
+                        
+                        if (isToday) extraLabel = ' (Today)';
+                        else if (isSpecificDate) extraLabel = ' (Selected Date)';
+                        else if (isAshikullahSpecial) extraLabel = ' (Excluded)';
+                        
+                        output += `
+                        <div class="month-day-item">
+                            <div class="month-day-header" onclick="toggleMonthDay(this)">
+                                <div style="flex-grow:1;">
+                                    <div style="font-weight:bold; color:#e5e7eb; margin-bottom:4px;">${formatDateBD(d).split(',')[1]}${extraLabel}</div>
+                                    ${showDailyTopics && Object.keys(dayData.topics).length > 0 ? 
+                                        `<div style="font-size:11px; color:#64748b;">${formatTopicBreakdown(dayData.topics)}</div>` : ''}
+                                </div>
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <div style="font-size:20px; font-weight:bold; color:#22c55e;">${dayData.problems.size}</div>
+                                    <div>${badge}</div>
+                                    <div class="toggle-icon" style="font-size:12px; color:#94a3b8;">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="month-day-content">
+                                <div class="problem-list">`;
+                        
+                        // Show problem details if enabled
+                        if (dayData.problemDetails.length > 0) {
+                            dayData.problemDetails.forEach(problem => {
+                                const ratingClass = getRatingClass(problem.rating);
+                                const ratingDisplay = problem.rating ? problem.rating : 'N/A';
+                                const problemUrl = `https://codeforces.com/problemset/problem/${problem.contestId}/${problem.index}`;
+                                
+                                output += `
+                                <div class="problem-item">
+                                    <a href="${problemUrl}" target="_blank" class="problem-link">
+                                        ${problem.name}
+                                    </a>
+                                    <span class="problem-rating ${ratingClass}">
+                                        ${ratingDisplay}
+                                    </span>
+                                </div>`;
+                            });
+                        } else {
+                            output += `<div style="text-align:center; color:#94a3b8; padding:20px;">No problem details available</div>`;
+                        }
+                        
+                        output += `
+                                </div>
+                            </div>
+                        </div>`;
+                    }
+                });
+                output += `</div>`;
+            }
+            output += `</div>`;
+
+            // Attempted but Unsolved Problems Section (as dropdown after Monthly Performance)
+            if (showUnsolvedProblems) {
+                if (Object.keys(attemptedButUnsolved).length > 0) {
+                    const sortedUnsolved = Object.values(attemptedButUnsolved)
+                        .sort((a, b) => b.attempts - a.attempts || b.lastAttemptDate.localeCompare(a.lastAttemptDate));
+                    
+                    output += `
+                    <div class="dropdown-section">
+                        <div class="dropdown-header" onclick="toggleDropdown(this)">
+                            <div class="dropdown-title">
+                                <i class="fas fa-times-circle"></i>
+                                <span>Attempted but Unsolved Problems (${selectedMonth})</span>
+                                <span class="badge badge-danger">${Object.keys(attemptedButUnsolved).length} problems</span>
+                            </div>
+                            <div class="toggle-icon" style="font-size:14px; color:#94a3b8;">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="dropdown-content">
+                            <p style="color: #94a3b8; margin-bottom: 15px; font-size: 14px;">
+                                Problems you attempted this month but haven't solved yet. Keep trying! 💪
+                            </p>
+                            
+                            <div class="unsolved-problems-container">`;
+                    
+                    sortedUnsolved.forEach(problem => {
+                        const ratingClass = getRatingClass(problem.rating);
+                        const ratingDisplay = problem.rating ? problem.rating : 'N/A';
+                        const problemUrl = `https://codeforces.com/problemset/problem/${problem.contestId}/${problem.index}`;
+                        const verdicts = Array.from(problem.verdicts).slice(0, 3).join(', ');
+                        
+                        output += `
+                        <div class="unsolved-problem-item">
+                            <div class="unsolved-problem-info">
+                                <a href="${problemUrl}" target="_blank" class="unsolved-problem-name">
+                                    ${problem.name}
+                                </a>
+                                <div class="unsolved-problem-meta">
+                                    <span class="problem-rating ${ratingClass}" style="margin-right: 10px;">
+                                        Rating: ${ratingDisplay}
+                                    </span>
+                                    <span style="color: #94a3b8;">
+                                        Last tried: ${formatDateBD(problem.lastAttemptDate).split(',')[1]}
+                                    </span>
+                                    <span class="attempt-count">
+                                        ${problem.attempts} attempt${problem.attempts > 1 ? 's' : ''}
+                                    </span>
+                                </div>
+                                ${verdicts ? `<div style="font-size: 11px; color: #ef4444; margin-top: 4px;">Verdicts: ${verdicts}</div>` : ''}
+                            </div>
+                            <div class="unsolved-problem-actions">
+                                <a href="${problemUrl}" target="_blank" style="color: #3b82f6; text-decoration: none;" title="Try Again">
+                                    <i class="fas fa-redo"></i>
+                                </a>
+                            </div>
+                        </div>`;
+                    });
+                    
+                    output += `
+                            </div>
+                            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                                <div style="font-size: 12px; color: #94a3b8;">
+                                    <i class="fas fa-lightbulb"></i> Tip: Review these problems and try to identify patterns in your mistakes.
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                } else {
+                    // Show empty state if no unsolved problems
+                    output += `
+                    <div class="dropdown-section">
+                        <div class="dropdown-header" onclick="toggleDropdown(this)">
+                            <div class="dropdown-title">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Attempted but Unsolved Problems (${selectedMonth})</span>
+                            </div>
+                            <div class="toggle-icon" style="font-size:14px; color:#94a3b8;">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="dropdown-content">
+                            <div class="empty-state">
+                                <i class="fas fa-check-circle"></i>
+                                <h3 style="color: #22c55e; margin-bottom: 10px;">Great Job! 🎉</h3>
+                                <p style="color: #94a3b8; max-width: 400px; margin: 0 auto;">
+                                    You don't have any attempted but unsolved problems for ${selectedMonth}. 
+                                    This means you either solved all problems you attempted or didn't attempt any this month.
+                                </p>
+                            </div>
+                        </div>
+                    </div>`;
+                }
+            }
+        }
+
+        // Rating Distribution
+        if (showRatingDistribution && Object.keys(ratingCount).length > 0) {
+            const sortedRatings = Object.entries(ratingCount)
+                .map(([rating, count]) => [parseInt(rating), count])
+                .sort((a, b) => a[0] - b[0]);
+
+            // Group ratings into categories
+            const ratingGroups = {
+                "Beginner (800-1200)": sortedRatings.filter(([rating]) => rating >= 800 && rating <= 1200).reduce((sum, [, count]) => sum + count, 0),
+                "Intermediate (1300-1700)": sortedRatings.filter(([rating]) => rating >= 1300 && rating <= 1700).reduce((sum, [, count]) => sum + count, 0),
+                "Advanced (1800-2200)": sortedRatings.filter(([rating]) => rating >= 1800 && rating <= 2200).reduce((sum, [, count]) => sum + count, 0),
+                "Expert (2300-2700)": sortedRatings.filter(([rating]) => rating >= 2300 && rating <= 2700).reduce((sum, [, count]) => sum + count, 0),
+                "Master (2800+)": sortedRatings.filter(([rating]) => rating >= 2800).reduce((sum, [, count]) => sum + count, 0)
+            };
+
+            // Create rating distribution card
+            output += `
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-chart-line"></i>
+                    Rating-wise Problem Distribution
+                </div>
+                <div class="rating-group">`;
+
+            Object.entries(ratingGroups).forEach(([group, count]) => {
+                if (count > 0) {
+                    let bgColor, textColor;
+                    if (group.includes("Beginner")) { bgColor = "rgba(34, 197, 94, 0.2)"; textColor = "#22c55e"; }
+                    else if (group.includes("Intermediate")) { bgColor = "rgba(59, 130, 246, 0.2)"; textColor = "#3b82f6"; }
+                    else if (group.includes("Advanced")) { bgColor = "rgba(168, 85, 247, 0.2)"; textColor = "#a855f7"; }
+                    else if (group.includes("Expert")) { bgColor = "rgba(245, 158, 11, 0.2)"; textColor = "#f59e0b"; }
+                    else { bgColor = "rgba(239, 68, 68, 0.2)"; textColor = "#ef4444"; }
+
+                    output += `
+                    <div class="rating-group-item" style="border: 1px solid ${textColor}20; background: ${bgColor};">
+                        <div style="font-size: 24px; font-weight: bold; color: ${textColor};">${count}</div>
+                        <div style="font-size: 12px; color: ${textColor};">${group}</div>
+                    </div>`;
+                }
+            });
+
+            output += `</div>`;
+
+            // Create detailed rating breakdown
+            output += `
+                <div style="margin-top: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <div style="color: #cbd5e1; font-weight: 500;">Detailed Rating Breakdown</div>
+                        <div style="color: #94a3b8; font-size: 12px;">Total: ${Object.values(ratingCount).reduce((a, b) => a + b, 0)} rated problems</div>
+                    </div>
+                    <div class="rating-bar-container">`;
+
+            // Create rating bars for each rating
+            sortedRatings.forEach(([rating, count]) => {
+                const maxCount = Math.max(...sortedRatings.map(([, c]) => c));
+                const percentage = (count / maxCount) * 100;
+                
+                let ratingColor;
+                if (rating < 1200) ratingColor = "#22c55e";
+                else if (rating < 1400) ratingColor = "#3b82f6";
+                else if (rating < 1600) ratingColor = "#8b5cf6";
+                else if (rating < 1900) ratingColor = "#f59e0b";
+                else if (rating < 2100) ratingColor = "#ef4444";
+                else if (rating < 2400) ratingColor = "#dc2626";
+                else ratingColor = "#7c3aed";
+
+                output += `
+                <div class="rating-bar">
+                    <div class="rating-bar-header">
+                        <div class="rating-bar-label">
+                            <div style="width: 16px; height: 16px; border-radius: 4px; background: ${ratingColor};"></div>
+                            <span style="color: #e5e7eb; font-weight: 500;">${rating}</span>
+                            <span style="color: #94a3b8; font-size: 12px;">(${count} problems)</span>
+                        </div>
+                        <div class="rating-bar-value">${count}</div>
+                    </div>
+                    <div class="rating-bar-progress">
+                        <div class="rating-bar-fill" style="width: ${percentage}%; background: ${ratingColor};"></div>
+                    </div>
+                </div>`;
+            });
+
+            output += `
+                    </div>
+                </div>
+            </div>`;
+
+            // Create rating chart
+            createRatingChart(sortedRatings);
+        }
+
+        // All Solved Topics (New Section)
+        if (showAllTopics && Object.keys(topicCount).length > 0) {
+            const sortedAllTopics = Object.entries(topicCount).sort((a,b) => b[1] - a[1]);
+            output += `<div class="card">
+                <div class="card-title">
+                    <i class="fas fa-tags"></i>
+                    All Solved Topics (${Object.keys(topicCount).length} topics)
+                </div>
+                <div class="all-topics-container">`;
+            
+            sortedAllTopics.forEach(([topic, count]) => {
+                output += `
+                <div class="topic-item">
+                    <span style="color:#cbd5e1;">${topic}</span>
+                    <span style="color:#22c55e; font-weight:bold; background:rgba(34,197,94,0.1); padding:4px 12px; border-radius:12px;">${count}</span>
+                </div>`;
+            });
+            
+            output += `</div></div>`;
+        }
+
+        // Topics (if showTopics is checked)
+        if(showTopics){
+            const sortedTopics = Object.entries(topicCount).sort((a,b)=>b[1]-a[1]);
+            
+            // Strong Topics
+            output += `<div class="card">
+                <div class="card-title">
+                    <i class="fas fa-check-circle"></i>
+                    Strong Topics (Top 5)
+                </div>`;
+            sortedTopics.slice(0,5).forEach(([t,c])=>{ 
+                output += `<div style="padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; justify-content:space-between;">
+                    <span>${t}</span>
+                    <span style="color:#22c55e; font-weight:bold;">${c}</span>
+                </div>`;
+            });
+            output += `</div>`;
+
+            // Weak Topics
+            output += `<div class="card">
+                <div class="card-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Weak Topics (Bottom 5)
+                </div>`;
+            sortedTopics.slice(-5).forEach(([t,c])=>{ 
+                output += `<div style="padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; justify-content:space-between;">
+                    <span>${t}</span>
+                    <span style="color:#f59e0b; font-weight:bold;">${c}</span>
+                </div>`;
+            });
+            output += `</div>`;
+
+            // Unsolved Topics
+            const allCFTags = [
+                "implementation","math","greedy","dp","graphs","trees","binary search",
+                "brute force","data structures","constructive algorithms","sortings","strings",
+                "combinatorics","geometry","dfs and similar","flows","number theory",
+                "probabilities","bitmasks","games","two pointers","divide and conquer","shortest paths",
+                "hashing","sets","hash table","segment tree","dfs","bfs","simulation"
+            ];
+            const solvedTopicsSet = new Set(Object.keys(topicCount));
+            const unsolvedTopics = allCFTags.filter(tag => !solvedTopicsSet.has(tag));
+            output += `<div class="card">
+                <div class="card-title">
+                    <i class="fas fa-times-circle"></i>
+                    Unsolved Topics (${unsolvedTopics.length})
+                </div>
+                <div style="color:#94a3b8; line-height:1.8; padding:10px 0;">
+                    ${unsolvedTopics.length > 0 ? unsolvedTopics.map(tag => `<span style="background:rgba(239,68,68,0.1); color:#ef4444; padding:4px 8px; border-radius:6px; margin:4px; display:inline-block;">${tag}</span>`).join(' ') : 'All common topics solved! 🎉'}
+                </div>
+            </div>`;
+        }
+
+        // Highest Effective Month
+        let monthSolvedCount = {};
+        Object.entries(dailySolvedAll).forEach(([month, daysObj])=>{
+            let total = 0;
+            let activeDays = 0;
+            Object.values(daysObj).forEach(dayData=> {
+                if (dayData.problems.size > 0) {
+                    total += dayData.problems.size;
+                    activeDays++;
+                }
+            });
+            monthSolvedCount[month] = {totalProblems: total, workingDays: activeDays};
+        });
+        
+        const highestMonthEntry = Object.entries(monthSolvedCount)
+            .sort((a,b)=>b[1].totalProblems - a[1].totalProblems)[0];
+
+        if(highestMonthEntry){
+            const [bestMonth, info] = highestMonthEntry;
+            const [year, month] = bestMonth.split('-');
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            output += `<div class="card">
+                <div class="card-title">
+                    <i class="fas fa-crown"></i>
+                    Highest Performing Month
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; background:linear-gradient(135deg, rgba(251,191,36,0.2) 0%, rgba(245,158,11,0.1) 100%); padding:20px; border-radius:10px; margin-top:10px;">
+                    <div>
+                        <div style="font-size:24px; font-weight:bold; color:#fbbf24;">${monthNames[parseInt(month)-1]} ${year}</div>
+                        <div style="color:#94a3b8; font-size:14px; margin-top:5px;">Peak performance achieved!</div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="font-size:28px; font-weight:bold; color:#22c55e;">${info.totalProblems}</div>
+                        <div style="color:#94a3b8; font-size:12px;">problems in ${info.workingDays} days</div>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        document.getElementById("output").innerHTML = output;
+
+        // Create Monthly Chart
+        createMonthlyChart(monthSolvedCount);
+
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        
+        if (error.message.includes("Failed to fetch") || error.message.includes("network")) {
+            showError(`
+                <div style="text-align: center; padding: 20px;">
+                    <i class="fas fa-wifi" style="font-size: 48px; color: #ef4444; margin-bottom: 15px;"></i>
+                    <h3 style="color: #ef4444; margin-bottom: 10px;">Network Error</h3>
+                    <p style="color: #94a3b8; margin-bottom: 15px;">
+                        Unable to connect to Codeforces API. Please check:
+                    </p>
+                    <ul style="text-align: left; max-width: 400px; margin: 0 auto; color: #cbd5e1;">
+                        <li>Your internet connection</li>
+                        <li>If Codeforces is accessible in your region</li>
+                        <li>Try refreshing the page</li>
+                    </ul>
+                </div>
+            `);
+        } else {
+            showError(`
+                <div style="text-align: center; padding: 20px;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 48px; color: #f59e0b; margin-bottom: 15px;"></i>
+                    <h3 style="color: #f59e0b; margin-bottom: 10px;">Temporary Issue</h3>
+                    <p style="color: #94a3b8;">
+                        Codeforces API might be temporarily unavailable. Please try again in a few minutes.
+                    </p>
+                </div>
+            `);
+        }
+    } finally {
+        // Reset button state
+        isLoading = false;
+        analyzeBtn.innerHTML = '<i class="fas fa-chart-bar"></i> <span>Analyze Progress</span>';
+        analyzeBtn.disabled = false;
+    }
+}
+
+function createMonthlyChart(monthData) {
+    const ctx = document.getElementById('monthlyChart').getContext('2d');
+    
+    if (monthlyChart) {
+        monthlyChart.destroy();
+    }
+    
+    const sortedMonths = Object.keys(monthData).sort();
+    const recentMonths = sortedMonths.slice(-12);
+    
+    const labels = recentMonths.map(month => {
+        const [year, mon] = month.split('-');
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        return `${monthNames[parseInt(mon)-1]} ${year}`;
+    });
+    
+    const problemsData = recentMonths.map(month => monthData[month]?.totalProblems || 0);
+    const daysData = recentMonths.map(month => monthData[month]?.workingDays || 0);
+    
+    monthlyChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Problems Solved',
+                    data: problemsData,
+                    backgroundColor: 'rgba(34, 197, 94, 0.7)',
+                    borderColor: 'rgba(34, 197, 94, 1)',
+                    borderWidth: 2,
+                    borderRadius: 6,
+                    yAxisID: 'y'
+                },
+                {
+                    label: 'Active Days',
+                    data: daysData,
+                    type: 'line',
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderWidth: 3,
+                    pointRadius: 6,
+                    pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                    tension: 0.4,
+                    yAxisID: 'y1'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '📈 Monthly Performance (Last 12 Months - Bangladesh Time)',
+                    color: '#e5e7eb',
+                    font: { 
+                        size: 18,
+                        weight: 'bold'
+                    },
+                    padding: { bottom: 20 }
+                },
+                legend: {
+                    labels: { 
+                        color: '#e5e7eb',
+                        font: { size: 14 },
+                        padding: 20
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(2, 6, 23, 0.9)',
+                    titleColor: '#22c55e',
+                    bodyColor: '#cbd5e1',
+                    borderColor: 'rgba(34, 197, 94, 0.3)',
+                    borderWidth: 1
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { 
+                        color: '#94a3b8',
+                        font: { size: 12 }
+                    },
+                    grid: { 
+                        color: 'rgba(148, 163, 184, 0.1)'
+                    }
+                },
+                y: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    title: {
+                        display: true,
+                        text: 'Problems Solved',
+                        color: '#94a3b8',
+                        font: { size: 14 }
+                    },
+                    ticks: { 
+                        color: '#94a3b8',
+                        font: { size: 12 }
+                    },
+                    grid: { 
+                        color: 'rgba(148, 163, 184, 0.1)'
+                    },
+                    beginAtZero: true
+                },
+                y1: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right',
+                    title: {
+                        display: true,
+                        text: 'Active Days',
+                        color: '#94a3b8',
+                        font: { size: 14 }
+                    },
+                    ticks: { 
+                        color: '#94a3b8',
+                        font: { size: 12 }
+                    },
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                    beginAtZero: true
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
+            animation: {
+                duration: 1000,
+                easing: 'easeOutQuart'
+            }
+        }
+    });
+}
+
+function createRatingChart(ratingData) {
+    const ctx = document.getElementById('ratingChart').getContext('2d');
+    
+    if (ratingChart) {
+        ratingChart.destroy();
+    }
+    
+    // Prepare data
+    const labels = ratingData.map(([rating]) => rating);
+    const data = ratingData.map(([, count]) => count);
+    
+    // Define colors based on rating
+    const backgroundColors = ratingData.map(([rating]) => {
+        if (rating < 1200) return 'rgba(34, 197, 94, 0.7)';
+        if (rating < 1400) return 'rgba(59, 130, 246, 0.7)';
+        if (rating < 1600) return 'rgba(168, 85, 247, 0.7)';
+        if (rating < 1900) return 'rgba(245, 158, 11, 0.7)';
+        if (rating < 2100) return 'rgba(239, 68, 68, 0.7)';
+        if (rating < 2400) return 'rgba(220, 38, 38, 0.7)';
+        return 'rgba(124, 58, 237, 0.7)';
+    });
+    
+    const borderColors = ratingData.map(([rating]) => {
+        if (rating < 1200) return 'rgba(34, 197, 94, 1)';
+        if (rating < 1400) return 'rgba(59, 130, 246, 1)';
+        if (rating < 1600) return 'rgba(168, 85, 247, 1)';
+        if (rating < 1900) return 'rgba(245, 158, 11, 1)';
+        if (rating < 2100) return 'rgba(239, 68, 68, 1)';
+        if (rating < 2400) return 'rgba(220, 38, 38, 1)';
+        return 'rgba(124, 58, 237, 1)';
+    });
+    
+    ratingChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Problems Solved',
+                data: data,
+                backgroundColor: backgroundColors,
+                borderColor: borderColors,
+                borderWidth: 2,
+                borderRadius: 6,
+                borderSkipped: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '📊 Rating Distribution of Solved Problems',
+                    color: '#e5e7eb',
+                    font: { 
+                        size: 18,
+                        weight: 'bold'
+                    },
+                    padding: { bottom: 20 }
+                },
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(2, 6, 23, 0.9)',
+                    titleColor: '#22c55e',
+                    bodyColor: '#cbd5e1',
+                    borderColor: 'rgba(34, 197, 94, 0.3)',
+                    borderWidth: 1,
+                    callbacks: {
+                        label: function(context) {
+                            return `Rating ${context.label}: ${context.raw} problems`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Problem Rating',
+                        color: '#94a3b8',
+                        font: {
+                            size: 14
+                        }
+                    },
+                    ticks: {
+                        color: '#94a3b8',
+                        font: {
+                            size: 12
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(148, 163, 184, 0.1)'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Number of Problems',
+                        color: '#94a3b8',
+                        font: {
+                            size: 14
+                        }
+                    },
+                    ticks: {
+                        color: '#94a3b8',
+                        font: {
+                            size: 12
+                        },
+                        precision: 0
+                    },
+                    grid: {
+                        color: 'rgba(148, 163, 184, 0.1)'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+</script>
+</body>
+</html>
